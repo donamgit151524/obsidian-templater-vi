@@ -27,3 +27,47 @@ Không chứa data.json, ghi chú, thông tin đăng nhập hoặc cấu hình c
 
 Mã nguồn và bản diff được đóng gói trong source-bundle.zip; giải nén để xem các thư mục source/ và patch-tools/.
 
+
+## Công dụng
+
+Templater tạo ghi chú theo mẫu động: điền ngày giờ, tên tệp, thông tin lặp lại và thực hiện các thao tác tự động bằng cú pháp `tp.*`. Khác với việc chép văn bản cố định, mẫu được xử lý khi chèn để tạo nội dung phù hợp tại thời điểm đó.
+
+## Cách dùng nhanh
+
+1. Tạo thư mục `Templates` trong vault.
+2. Vào Settings → Templater → mục thư mục mẫu (**Template folder location**) và chọn `Templates`.
+3. Tạo `Templates/Ghi chú học tập.md` với nội dung:
+
+```markdown
+# <% tp.file.title %>
+Ngày học: <% tp.date.now("YYYY-MM-DD") %>
+
+## Ý chính
+
+## Ví dụ
+
+## Câu hỏi cần ôn
+```
+
+4. Tạo hoặc mở ghi chú đích, đặt con trỏ nơi cần chèn.
+5. Mở khay lệnh (`Ctrl+P`) → tìm **Templater: Open insert template modal** (hộp chọn/chèn mẫu trong bản Việt hóa), rồi chọn `Ghi chú học tập`.
+6. Kiểm tra ngày và tên ghi chú đã được điền. Nếu chỉ dán mã mẫu vào tệp mà không thực thi, dùng lệnh **Templater: Replace templates in the active file** để xử lý các thẻ trong tệp đang mở.
+
+Ví dụ: tạo một mẫu báo cáo thực hành STM32 gồm mục tiêu, sơ đồ đấu dây, mã chương trình và kết quả; mỗi buổi chèn cùng mẫu rồi bổ sung nội dung.
+
+## Tự áp dụng mẫu khi tạo tệp
+
+Trong Templater, có thể bật **Trigger Templater on new file creation**, sau đó cấu hình **Folder templates** để các ghi chú mới trong thư mục học tập nhận mẫu tương ứng. Thử trước với một thư mục mẫu riêng. Không dùng đồng thời nhiều cơ chế chèn mẫu cho cùng tệp nếu chúng làm nội dung bị lặp.
+
+## Lưu ý khi dùng mẫu
+
+- Giữ nguyên cú pháp `<% ... %>` và tên API `tp.*` dù giao diện được Việt hóa.
+- Mẫu có JavaScript hoặc lệnh hệ thống có thể thực hiện thao tác ngoài việc chèn chữ; chỉ chạy mẫu bạn hiểu hoặc tin cậy.
+- Nếu mẫu không được tìm thấy, kiểm tra thư mục mẫu và đuôi `.md`. Nếu báo lỗi thực thi, xem thông báo và kiểm tra cú pháp mẫu.
+
+## Cài và cập nhật bản Việt hóa
+
+Trong BRAT → **Add beta plugin**, nhập `donamgit151524/obsidian-templater-vi`. Bật plugin sau khi cài. ID giữ nguyên `templater-obsidian`; không cài song song với bản gốc cùng ID. Cấu hình cá nhân không nằm trong repository. Cập nhật bản Việt hóa bằng BRAT để tránh bị bản Community ghi đè.
+
+Tham khảo [tài liệu Templater chính thức](https://silentvoid13.github.io/Templater/) để dùng thêm API và tính năng nâng cao.
+
